@@ -1,0 +1,32 @@
+#deploy
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: springboot-web-demo
+spec:
+  selector:
+    matchLabels:
+      app: springboot-web-demo
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: springboot-web-demo
+    spec:
+      containers:
+      - name: springboot-web-demo
+        image: docker.io/jamesguan/springboot-web:v2
+        ports:
+        - containerPort: 8080
+---
+#service
+apiVersion: v1
+kind: Service
+metadata:
+  name: springboot-web-demo
+spec:
+  ports:
+  - port: 8080
+    name: http
+  selector:
+    app: springboot-web-demo
